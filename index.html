@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CHISEL · a sculpting sampler for the MPC Sample</title>
+<meta name="description" content="A sculpting-sampler firmware concept for the Akai MPC Sample, inspired with love for the Torso S-4: four tracks, five devices, sixteen pressure pads, three knobs.">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231B1B19'/%3E%3Crect x='6' y='6' width='9' height='9' rx='2' fill='%23E69F00'/%3E%3Crect x='17' y='6' width='9' height='9' rx='2' fill='%2356B4E9'/%3E%3Crect x='6' y='17' width='9' height='9' rx='2' fill='%23009E73'/%3E%3Crect x='17' y='17' width='9' height='9' rx='2' fill='%23CC79A7'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#main" aria-label="CHISEL, back to top">CHISEL</a>
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#idea">Idea</a></li>
+        <li><a href="#gap">Hardware</a></li>
+        <li><a href="#flow">Signal</a></li>
+        <li><a href="#pads">Pads</a></li>
+        <li><a href="#controls">Controls</a></li>
+        <li><a href="#screens">Screens</a></li>
+        <li><a href="#a11y">Access</a></li>
+        <li><a href="#next">Next</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-in">
+      <div class="hero-copy">
+        <p class="kicker">Design concept · October 2026</p>
+        <h1 id="hero-title">CHISEL</h1>
+        <p class="lede">A sculpting-sampler firmware concept for the Akai MPC Sample, inspired with love for the <a href="https://torsoelectronics.com/">Torso S-4</a>. It runs four tracks, each with five devices in a chain. You play it with sixteen pressure pads and three knobs.</p>
+        <p class="note">I own two S-4s, and if you like what this does, I recommend supporting Torso and getting the real thing. This is just my take on how those ideas could live on different hardware. It's a design spec, not shipping software. Akai announced on Oct 28, 2026 that it's opening the MPC Sample to custom firmware, and this is what I'd want to build on it.</p>
+      </div>
+      <figure class="hero-pads" aria-hidden="true">
+        <div class="mini-grid" id="hero-grid"></div>
+      </figure>
+    </div>
+  </section>
+
+  <section id="idea" class="sec" aria-labelledby="idea-title">
+    <div class="wrap">
+      <p class="num">01</p>
+      <h2 id="idea-title">The panel is the signal flow</h2>
+      <div class="cols">
+        <div class="prose">
+          <p>What I love about the S-4 is that its interface <em>is</em> its signal chain. The device buttons sit in chain order, and the encoders map straight onto what's on screen. You never wonder where you are.</p>
+          <p>The MPC Sample doesn't have nine encoders, but it has something the S-4 lacks: sixteen pads with poly aftertouch. So instead of copying the S-4's controls, I move the navigation onto the pads and let pressure do work that buttons can't.</p>
+        </div>
+        <ol class="goals">
+          <li><strong>The pad grid is the chain.</strong> You can see where you are from the pads alone, without reading the screen.</li>
+          <li><strong>Three knobs, three values.</strong> A screen never shows more than the three knobs can reach.</li>
+          <li><strong>Pressure is a mod source.</strong> The S-4's action buttons become pressure pads, so actions like Freeze or Wash can be played partway, not just switched on or off.</li>
+          <li><strong>Two presses to anything.</strong> Any parameter is a device pad plus an F-button away.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section id="gap" class="sec alt" aria-labelledby="gap-title">
+    <div class="wrap">
+      <p class="num">02</p>
+      <h2 id="gap-title">Two boxes, one gap</h2>
+      <p class="intro">The MPC Sample has fewer continuous controls and a smaller screen than the S-4, but far more playable surface. So the design shifts work off the knobs and onto the pads.</p>
+      <div class="table-box" role="region" aria-labelledby="gap-title" tabindex="0">
+        <table>
+          <thead><tr><th scope="col">Control</th><th scope="col">Torso S-4</th><th scope="col">MPC Sample</th><th scope="col">What it means for CHISEL</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Screen</th><td>3.5 in color LCD</td><td>2.4 in color LCD</td><td>One device page at a time, 3 values max, big type</td></tr>
+            <tr><th scope="row">Continuous</th><td>9 endless encoders</td><td>3 knobs, 1 fader, 1 push encoder</td><td>Knobs need a takeover strategy; the encoder fine-tunes</td></tr>
+            <tr><th scope="row">Buttons</th><td>21 RGB, 4 contextual action buttons</td><td>3 function buttons, mode buttons, Shift, transport</td><td>F-buttons pick pages; mode buttons pick modes</td></tr>
+            <tr><th scope="row">Pads</th><td>None</td><td>16 RGB, velocity + poly aftertouch</td><td>Navigation, actions and pressure modulation</td></tr>
+            <tr><th scope="row">Structure</th><td>4 stereo tracks × 5 devices</td><td>1 program, one sample per pad</td><td>CHISEL adds the track structure</td></tr>
+            <tr><th scope="row">Voices</th><td>8-voice poly per track</td><td>32 stereo voices</td><td>4 × 8 fits exactly, before granular cost</td></tr>
+            <tr><th scope="row">Power</th><td>Wall power</td><td>Battery, up to 5 h</td><td>CPU budget is a design constraint, not an afterthought</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="flow" class="sec" aria-labelledby="flow-title">
+    <div class="wrap">
+      <p class="num">03</p>
+      <h2 id="flow-title">Four tracks, same chain</h2>
+      <p class="intro">I'm keeping the S-4's shape exactly. Each track runs Material → Granular → Filter → Color → Space, and all four sum through a mixer that has a DJ filter per channel and a compressor on the master bus. The one addition is pad pressure, a fifth mod source next to the four modulators.</p>
+      <figure class="diagram">
+        <svg viewBox="0 0 760 300" role="img" aria-labelledby="dia-t dia-d">
+          <title id="dia-t">CHISEL signal flow</title>
+          <desc id="dia-d">Modulators and pad pressure feed each track. Each of four tracks runs Material, Granular, Filter, Color and Space in order, then all four tracks sum into a mixer and a master compressor.</desc>
+          <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="d-fill"/></marker></defs>
+          <rect x="16" y="8" width="520" height="34" rx="8" class="d-accent"/>
+          <text x="276" y="30" text-anchor="middle" class="d-t">Modulators 1–4 + pad pressure, per track</text>
+          <path d="M276 42V66" class="d-line" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+          <rect x="16" y="66" width="520" height="84" rx="8" class="d-box"/>
+          <text x="30" y="88" class="d-s">TRACK 1</text>
+          <g class="d-dev">
+            <rect x="30" y="98" width="88" height="38" rx="6"/><rect x="130" y="98" width="88" height="38" rx="6"/><rect x="230" y="98" width="88" height="38" rx="6"/><rect x="330" y="98" width="88" height="38" rx="6"/><rect x="430" y="98" width="88" height="38" rx="6"/>
+          </g>
+          <text x="74" y="122" text-anchor="middle" class="d-t b">Material</text>
+          <text x="174" y="122" text-anchor="middle" class="d-t b">Granular</text>
+          <text x="274" y="122" text-anchor="middle" class="d-t b">Filter</text>
+          <text x="374" y="122" text-anchor="middle" class="d-t b">Color</text>
+          <text x="474" y="122" text-anchor="middle" class="d-t b">Space</text>
+          <path d="M118 117H128M218 117H228M318 117H328M418 117H428" class="d-line" marker-end="url(#arr)"/>
+          <rect x="16" y="162" width="520" height="34" rx="8" class="d-box"/><text x="30" y="184" class="d-t">Track 2 · same chain</text>
+          <rect x="16" y="208" width="520" height="34" rx="8" class="d-box"/><text x="30" y="230" class="d-t">Track 3 · same chain</text>
+          <rect x="16" y="254" width="520" height="34" rx="8" class="d-box"/><text x="30" y="276" class="d-t">Track 4 · same chain</text>
+          <path d="M536 108H556M536 179H556M536 225H556M536 271H556" class="d-line" marker-end="url(#arr)"/>
+          <rect x="556" y="66" width="92" height="222" rx="8" class="d-box"/>
+          <text x="602" y="170" text-anchor="middle" class="d-t b">Mixer</text>
+          <text x="602" y="190" text-anchor="middle" class="d-s">DJ filter</text>
+          <text x="602" y="206" text-anchor="middle" class="d-s">level · pan</text>
+          <path d="M648 177H664" class="d-line" marker-end="url(#arr)"/>
+          <rect x="664" y="141" width="80" height="72" rx="8" class="d-box"/>
+          <text x="704" y="172" text-anchor="middle" class="d-t b">Master</text>
+          <text x="704" y="192" text-anchor="middle" class="d-s">sum comp</text>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <section id="pads" class="sec alt" aria-labelledby="pads-title">
+    <div class="wrap">
+      <p class="num">04</p>
+      <h2 id="pads-title">What the pads do</h2>
+      <p class="intro">CHISEL takes over five stock buttons as modes. Pressing the active mode's button again always returns to Chain, so there's one way home from anywhere. Try it: pick a mode, then tap pads. In Chain, the track and device pads change what the bottom row does.</p>
+
+      <div class="explorer">
+        <div class="modes" role="tablist" aria-label="Modes" id="mode-tabs"></div>
+        <div class="ex-body" role="tabpanel" id="mode-panel" tabindex="-1">
+          <div class="ex-grid-wrap">
+            <p class="ex-axis">Top row = pads 13–16 · pad 1 is bottom-left</p>
+            <div class="pad-grid" id="pad-grid"></div>
+          </div>
+          <div class="ex-info">
+            <h3 id="mode-name"></h3>
+            <p class="ex-btn" id="mode-button"></p>
+            <p id="mode-note"></p>
+            <div class="ex-detail" id="pad-detail" aria-live="polite"></div>
+            <ul class="legend" aria-label="Pad states">
+              <li><span class="sw full" aria-hidden="true"></span>Full: focused or selected</li>
+              <li><span class="sw ring" aria-hidden="true"></span>Ring: active</li>
+              <li><span class="sw dim" aria-hidden="true"></span>Dashed: bypassed, muted, empty</li>
+              <li><span class="sw util" aria-hidden="true"></span>Neutral: utility</li>
+              <li><span class="sw act" aria-hidden="true"></span>Light, with bar: pressure-sensitive</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="controls" class="sec" aria-labelledby="controls-title">
+    <div class="wrap">
+      <p class="num">05</p>
+      <h2 id="controls-title">Knobs, pages and the fader</h2>
+      <p class="intro">Each control has exactly one job per mode, and the screen always says what that job is. My rule: if you have to remember what a control does, the screen failed.</p>
+      <dl class="ctl">
+        <div><dt>Knobs 1–3</dt><dd>Control the three values on screen, left to right. Each knob sits directly under its value.</dd></div>
+        <div><dt>F1–F3</dt><dd>Switch between the focused device's three named pages. The names print right above the buttons. Shift + F resets that knob's value.</dd></div>
+        <div><dt>Fader</dt><dd>Sets the device's Amount (dry/wet) in Chain, morphs between scenes in Perform, and sets track level in Mix.</dd></div>
+        <div><dt>Encoder</dt><dd>Turning it fine-adjusts the last-touched value in 1/10 steps. Pressing it moves to the next value. It also scrolls lists.</dd></div>
+        <div><dt>Shift + pad</dt><dd>Reaches global functions: save, project, settings, MIDI. That leaves the mode buttons for modes only.</dd></div>
+      </dl>
+      <div class="callout">
+        <h3>Knob takeover, made visible</h3>
+        <p>The MPC Sample's knobs are absolute pots, so they're almost never sitting where the parameter is. I default to <strong>scaled</strong> takeover, building on the modes Akai added in firmware 1.3. The value moves the way you turn, at a rate that converges on the knob's real position, so nothing jumps.</p>
+        <p>The screen also shows the gap. A hollow tick on each value's arc marks where the physical knob actually is. When the tick and the value meet, the tick disappears.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="screens" class="sec alt" aria-labelledby="screens-title">
+    <div class="wrap">
+      <p class="num">06</p>
+      <h2 id="screens-title">Every screen, same four zones</h2>
+      <p class="intro">From top to bottom: a status bar, the F-button labels, a visual, and three values over the three knobs. Navigation is hub and spokes. Chain is home, every other screen is one press away, and nothing nests deeper than device → page. The mockups below are drawn at 2× an assumed 320 × 240 panel.</p>
+      <div class="screens" id="screens-list"></div>
+    </div>
+  </section>
+
+  <section id="a11y" class="sec" aria-labelledby="a11y-title">
+    <div class="wrap">
+      <p class="num">07</p>
+      <h2 id="a11y-title">Accessible on a 2.4-inch screen</h2>
+      <p class="intro">The biggest risks are legibility and meaning carried by color alone. I'm using WCAG 2.2 as the bar where it applies to hardware, and going past it where the small screen demands. These are design rules, so they cost nothing to adopt now and a lot to retrofit later.</p>
+      <div class="cards">
+        <article><h3>Vision</h3><p>Value numerals are at least 20 px and labels at least 11 px, with 7:1 contrast. A Large mode shows one value per screen in huge type.</p></article>
+        <article><h3>Color</h3><p>Track colors come from the Okabe-Ito palette, and each track also has a glyph (● ▲ ■ ◆). Pad state is shown by brightness and border style, never by hue alone.</p></article>
+        <article><h3>Motor</h3><p>Every hold has a latch alternative, and no gesture depends on timing. Pressure curve and pad sensitivity are adjustable.</p></article>
+        <article><h3>Cognitive</h3><p>Breadcrumbs are always on screen, and every mode has the same one-press way home. Holding Shift draws a legend of what each pad does.</p></article>
+        <article><h3>Non-visual</h3><p>The UI state could stream over USB MIDI to a companion app that reads it aloud. Optional quiet ticks confirm mode and page changes.</p></article>
+        <article><h3>Photosensitivity</h3><p>Pads and screen never flash more than 3 times a second. Tempo blinks are soft pulses, not hard on/off.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="next" class="sec alt" aria-labelledby="next-title">
+    <div class="wrap">
+      <p class="num">08</p>
+      <h2 id="next-title">Open questions</h2>
+      <ul class="qs">
+        <li>What does Akai's firmware SDK expose: pad LEDs, raw poly aftertouch, button remapping, DSP access, USB MIDI out?</li>
+        <li>What's the screen's native resolution? Every type size here assumes 320 × 240.</li>
+        <li>Does the CPU have headroom for 4 granular tracks at 128 grains each, or should grains be capped per track?</li>
+        <li>Chain mode uses rows for functions and Mix uses columns for tracks. Is that mismatch comfortable in the hand?</li>
+        <li>Next step: a clickable prototype to test the two-press rule.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>CHISEL is an independent design concept, inspired with love for the Torso S-4. I own two, and if you like the device, please support <a href="https://torsoelectronics.com/">Torso Electronics</a>. This is just my take. It isn't affiliated with or endorsed by Akai Professional or Torso Electronics. MPC is a trademark of inMusic Brands; S-4 is a product of Torso Electronics.</p>
+    <h2 class="foot-h">Sources</h2>
+    <ul class="src">
+      <li><a href="https://synthanatomy.com/2026/10/akai-mpc-sample-hardware-sampler-inspired-by-the-mpc60-and-mpc3000.html">Synth Anatomy: MPC Sample, open firmware and specs</a></li>
+      <li><a href="https://www.soundonsound.com/reviews/akai-mpc-sample">Sound On Sound: Akai MPC Sample review</a></li>
+      <li><a href="https://www.gearnews.com/akai-mpc-sample-review/">Gearnews: MPC Sample review and firmware 1.3</a></li>
+      <li><a href="https://thomann.ae/torso_electronics_s_4.htm">Thomann: Torso S-4 specifications</a></li>
+      <li><a href="https://www.signalsounds.com/torso-s4-sculpting-sampler-white">Signal Sounds: S-4 Perform page and modulators</a></li>
+      <li><a href="https://splice.com/blog/?p=36800">Splice: The Torso S-4 complete guide</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>
