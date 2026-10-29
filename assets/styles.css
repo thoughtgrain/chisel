@@ -100,9 +100,12 @@ a:hover { color: var(--accent); }
 .hero-in { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 56px; align-items: center; }
 @media (max-width: 860px) { .hero-in { grid-template-columns: 1fr; gap: 40px; } .hero { padding: 56px 0 48px; } }
 .kicker { margin: 0 0 12px; font: 600 13px/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+/* The wide Archivo cut runs ~4.7em for "CHISEL", so the title is sized to its
+   own column (container query) rather than the viewport, so it never spills into the pad grid. */
+.hero-copy { container-type: inline-size; min-width: 0; }
 .hero h1 {
   margin: 0;
-  font: 800 clamp(64px, 13vw, 156px)/0.86 var(--display);
+  font: 800 min(19.5cqw, 156px)/0.86 var(--display);
   font-variation-settings: 'wdth' 125;
   letter-spacing: -0.02em;
 }
