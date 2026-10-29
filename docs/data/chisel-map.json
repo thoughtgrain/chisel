@@ -1,0 +1,974 @@
+{
+  "$comment": "CHISEL machine-readable map. Pad 1 is bottom-left, pad 16 top-right. See docs/05-modes-and-pads.md.",
+  "version": "0.1.0",
+  "screen": {
+    "assumedResolution": [
+      320,
+      240
+    ],
+    "zones": [
+      {
+        "id": "status",
+        "height": 22
+      },
+      {
+        "id": "fLabels",
+        "height": 24
+      },
+      {
+        "id": "visual",
+        "height": 114
+      },
+      {
+        "id": "values",
+        "height": 80
+      }
+    ],
+    "minType": {
+      "value": 20,
+      "label": 11
+    },
+    "minContrast": 7
+  },
+  "padStates": {
+    "full": "focused or selected",
+    "ring": "active (mid brightness)",
+    "dim": "bypassed, muted or empty (~15% brightness)",
+    "utility": "neutral function",
+    "pressure": "pressure-sensitive action or macro"
+  },
+  "controls": {
+    "knobs": "three values on screen, left to right",
+    "fButtons": "device pages 1-3; Shift = reset value",
+    "encoder": {
+      "turn": "fine adjust 1/10 step",
+      "press": "next value"
+    },
+    "takeover": {
+      "default": "scaled",
+      "options": [
+        "pickup",
+        "scaled",
+        "instant"
+      ]
+    },
+    "shiftPad": "global functions",
+    "modeButtonAgain": "return to chain"
+  },
+  "tracks": [
+    {
+      "id": "t1",
+      "number": 1,
+      "glyph": "●",
+      "color": "#E69F00"
+    },
+    {
+      "id": "t2",
+      "number": 2,
+      "glyph": "▲",
+      "color": "#56B4E9"
+    },
+    {
+      "id": "t3",
+      "number": 3,
+      "glyph": "■",
+      "color": "#009E73"
+    },
+    {
+      "id": "t4",
+      "number": 4,
+      "glyph": "◆",
+      "color": "#CC79A7"
+    }
+  ],
+  "chain": [
+    "material",
+    "granular",
+    "filter",
+    "color",
+    "space"
+  ],
+  "modulators": {
+    "perTrack": 4,
+    "shapes": [
+      "LFO",
+      "Random",
+      "Envelope",
+      "Follower"
+    ],
+    "extraSource": "pad pressure"
+  },
+  "voices": {
+    "total": 32,
+    "perTrackDefault": 8,
+    "pool": "shared with per-track caps"
+  },
+  "devices": [
+    {
+      "id": "material",
+      "name": "Material",
+      "short": "MAT",
+      "pages": [
+        {
+          "button": "F1",
+          "name": "Tape",
+          "params": [
+            "Start",
+            "Length",
+            "Speed"
+          ]
+        },
+        {
+          "button": "F2",
+          "name": "Play",
+          "params": [
+            "Mode",
+            "Level",
+            "Pan"
+          ]
+        },
+        {
+          "button": "F3",
+          "name": "Env",
+          "params": [
+            "Attack",
+            "Release",
+            "Loop fade"
+          ]
+        }
+      ],
+      "enums": {
+        "Mode": [
+          "Tape",
+          "Poly",
+          "Live",
+          "Off"
+        ]
+      },
+      "visual": "waveform",
+      "actions": [
+        {
+          "pad": "A",
+          "name": "Rec / overdub",
+          "pressure": "input gain"
+        },
+        {
+          "pad": "B",
+          "name": "Play / stop",
+          "pressure": "tape slowdown"
+        },
+        {
+          "pad": "C",
+          "name": "Reverse",
+          "pressure": null
+        },
+        {
+          "pad": "D",
+          "name": "Retrigger",
+          "pressure": null
+        }
+      ]
+    },
+    {
+      "id": "granular",
+      "name": "Granular",
+      "short": "GRN",
+      "pages": [
+        {
+          "button": "F1",
+          "name": "Grain",
+          "params": [
+            "Size",
+            "Density",
+            "Contour"
+          ]
+        },
+        {
+          "button": "F2",
+          "name": "Spray",
+          "params": [
+            "Position",
+            "Scatter",
+            "Width"
+          ]
+        },
+        {
+          "button": "F3",
+          "name": "Pitch",
+          "params": [
+            "Pitch",
+            "Pitch scatter",
+            "Mix"
+          ]
+        }
+      ],
+      "visual": "grain-cloud",
+      "actions": [
+        {
+          "pad": "A",
+          "name": "Freeze",
+          "pressure": "freeze blend"
+        },
+        {
+          "pad": "B",
+          "name": "Spray burst",
+          "pressure": "burst depth"
+        },
+        {
+          "pad": "C",
+          "name": "Pitch +12",
+          "pressure": "blend"
+        },
+        {
+          "pad": "D",
+          "name": "Density surge",
+          "pressure": "density"
+        }
+      ]
+    },
+    {
+      "id": "filter",
+      "name": "Filter",
+      "short": "FLT",
+      "pages": [
+        {
+          "button": "F1",
+          "name": "Tone",
+          "params": [
+            "Cutoff",
+            "Resonance",
+            "Morph"
+          ]
+        },
+        {
+          "button": "F2",
+          "name": "Bank",
+          "params": [
+            "Root",
+            "Spread",
+            "Animate"
+          ]
+        },
+        {
+          "button": "F3",
+          "name": "Mode",
+          "params": [
+            "Type",
+            "Drive",
+            "Mix"
+          ]
+        }
+      ],
+      "enums": {
+        "Type": [
+          "LP",
+          "BP",
+          "HP",
+          "Resonator"
+        ]
+      },
+      "visual": "band-bars-48",
+      "actions": [
+        {
+          "pad": "A",
+          "name": "Resonance swell",
+          "pressure": "resonance"
+        },
+        {
+          "pad": "B",
+          "name": "Sweep down",
+          "pressure": "sweep depth"
+        },
+        {
+          "pad": "C",
+          "name": "Sweep up",
+          "pressure": "sweep depth"
+        },
+        {
+          "pad": "D",
+          "name": "Morph hold",
+          "pressure": null
+        }
+      ]
+    },
+    {
+      "id": "color",
+      "name": "Color",
+      "short": "COL",
+      "pages": [
+        {
+          "button": "F1",
+          "name": "Drive",
+          "params": [
+            "Low drive",
+            "High drive",
+            "Crossover"
+          ]
+        },
+        {
+          "button": "F2",
+          "name": "Crush",
+          "params": [
+            "Bits",
+            "Rate",
+            "Noise"
+          ]
+        },
+        {
+          "button": "F3",
+          "name": "Glue",
+          "params": [
+            "Comp",
+            "Release",
+            "Mix"
+          ]
+        }
+      ],
+      "visual": "transfer-curve",
+      "actions": [
+        {
+          "pad": "A",
+          "name": "Drive push",
+          "pressure": "drive"
+        },
+        {
+          "pad": "B",
+          "name": "Crush push",
+          "pressure": "crush"
+        },
+        {
+          "pad": "C",
+          "name": "Noise in",
+          "pressure": "noise level"
+        },
+        {
+          "pad": "D",
+          "name": "Comp slam",
+          "pressure": "comp amount"
+        }
+      ]
+    },
+    {
+      "id": "space",
+      "name": "Space",
+      "short": "SPC",
+      "pages": [
+        {
+          "button": "F1",
+          "name": "Room",
+          "params": [
+            "Size",
+            "Decay",
+            "Damping"
+          ]
+        },
+        {
+          "button": "F2",
+          "name": "Delay",
+          "params": [
+            "Time",
+            "Feedback",
+            "Type"
+          ]
+        },
+        {
+          "button": "F3",
+          "name": "Blend",
+          "params": [
+            "Reverb / delay",
+            "Freeze",
+            "Mix"
+          ]
+        }
+      ],
+      "visual": "decay-envelope",
+      "actions": [
+        {
+          "pad": "A",
+          "name": "Freeze tail",
+          "pressure": null
+        },
+        {
+          "pad": "B",
+          "name": "Delay throw",
+          "pressure": "send"
+        },
+        {
+          "pad": "C",
+          "name": "Wash",
+          "pressure": "wash depth"
+        },
+        {
+          "pad": "D",
+          "name": "Kill tails",
+          "pressure": null
+        }
+      ]
+    }
+  ],
+  "modes": [
+    {
+      "id": "chain",
+      "name": "Chain",
+      "stockButton": "Sample",
+      "home": true,
+      "fader": "device amount",
+      "fPages": [
+        "Tracks",
+        "Scenes",
+        "Project"
+      ],
+      "pads": [
+        {
+          "pad": 1,
+          "role": "action",
+          "action": "A",
+          "pressure": true,
+          "source": "focused device"
+        },
+        {
+          "pad": 2,
+          "role": "action",
+          "action": "B",
+          "pressure": true,
+          "source": "focused device"
+        },
+        {
+          "pad": 3,
+          "role": "action",
+          "action": "C",
+          "pressure": true,
+          "source": "focused device"
+        },
+        {
+          "pad": 4,
+          "role": "action",
+          "action": "D",
+          "pressure": true,
+          "source": "focused device"
+        },
+        {
+          "pad": 5,
+          "role": "device",
+          "device": "space",
+          "tap": "focus; tap again = next page"
+        },
+        {
+          "pad": 6,
+          "role": "utility",
+          "name": "Bypass",
+          "hold": "then tap a device",
+          "latch": "Shift + Bypass"
+        },
+        {
+          "pad": 7,
+          "role": "utility",
+          "name": "Copy",
+          "hold": "source, then tap destination"
+        },
+        {
+          "pad": 8,
+          "role": "utility",
+          "name": "Capture",
+          "tap": "resample focused track"
+        },
+        {
+          "pad": 9,
+          "role": "device",
+          "device": "material",
+          "tap": "focus; tap again = next page"
+        },
+        {
+          "pad": 10,
+          "role": "device",
+          "device": "granular",
+          "tap": "focus; tap again = next page"
+        },
+        {
+          "pad": 11,
+          "role": "device",
+          "device": "filter",
+          "tap": "focus; tap again = next page"
+        },
+        {
+          "pad": 12,
+          "role": "device",
+          "device": "color",
+          "tap": "focus; tap again = next page"
+        },
+        {
+          "pad": 13,
+          "role": "track",
+          "track": "t1",
+          "tap": "focus",
+          "hold": "solo"
+        },
+        {
+          "pad": 14,
+          "role": "track",
+          "track": "t2",
+          "tap": "focus",
+          "hold": "solo"
+        },
+        {
+          "pad": 15,
+          "role": "track",
+          "track": "t3",
+          "tap": "focus",
+          "hold": "solo"
+        },
+        {
+          "pad": 16,
+          "role": "track",
+          "track": "t4",
+          "tap": "focus",
+          "hold": "solo"
+        }
+      ]
+    },
+    {
+      "id": "perform",
+      "name": "Perform",
+      "stockButton": "Pad FX",
+      "fader": "scene morph",
+      "fPages": [
+        "Macros",
+        "Scenes",
+        "Map"
+      ],
+      "pads": [
+        {
+          "pad": 1,
+          "role": "scene",
+          "index": "A",
+          "tap": "recall",
+          "shift": "store",
+          "hold2": "fader morphs"
+        },
+        {
+          "pad": 2,
+          "role": "scene",
+          "index": "B",
+          "tap": "recall",
+          "shift": "store",
+          "hold2": "fader morphs"
+        },
+        {
+          "pad": 3,
+          "role": "scene",
+          "index": "C",
+          "tap": "recall",
+          "shift": "store",
+          "hold2": "fader morphs"
+        },
+        {
+          "pad": 4,
+          "role": "scene",
+          "index": "D",
+          "tap": "recall",
+          "shift": "store",
+          "hold2": "fader morphs"
+        },
+        {
+          "pad": 5,
+          "role": "macro",
+          "index": 1,
+          "pressure": true,
+          "release": "spring back",
+          "latch": "Shift + tap"
+        },
+        {
+          "pad": 6,
+          "role": "macro",
+          "index": 2,
+          "pressure": true,
+          "release": "spring back",
+          "latch": "Shift + tap"
+        },
+        {
+          "pad": 7,
+          "role": "macro",
+          "index": 3,
+          "pressure": true,
+          "release": "spring back",
+          "latch": "Shift + tap"
+        },
+        {
+          "pad": 8,
+          "role": "macro",
+          "index": 4,
+          "pressure": true,
+          "release": "spring back",
+          "latch": "Shift + tap"
+        },
+        {
+          "pad": 9,
+          "role": "macro",
+          "index": 5,
+          "pressure": true,
+          "release": "spring back",
+          "latch": "Shift + tap"
+        },
+        {
+          "pad": 10,
+          "role": "macro",
+          "index": 6,
+          "pressure": true,
+          "release": "spring back",
+          "latch": "Shift + tap"
+        },
+        {
+          "pad": 11,
+          "role": "macro",
+          "index": 7,
+          "pressure": true,
+          "release": "spring back",
+          "latch": "Shift + tap"
+        },
+        {
+          "pad": 12,
+          "role": "macro",
+          "index": 8,
+          "pressure": true,
+          "release": "spring back",
+          "latch": "Shift + tap"
+        },
+        {
+          "pad": 13,
+          "role": "punch-in",
+          "index": 1,
+          "pressure": true
+        },
+        {
+          "pad": 14,
+          "role": "punch-in",
+          "index": 2,
+          "pressure": true
+        },
+        {
+          "pad": 15,
+          "role": "punch-in",
+          "index": 3,
+          "pressure": true
+        },
+        {
+          "pad": 16,
+          "role": "punch-in",
+          "index": 4,
+          "pressure": true
+        }
+      ]
+    },
+    {
+      "id": "mod",
+      "name": "Mod",
+      "stockButton": "Sequence",
+      "fader": "device amount",
+      "fPages": [
+        "Shape",
+        "Timing",
+        "Targets"
+      ],
+      "pads": [
+        {
+          "pad": 1,
+          "role": "track",
+          "track": "t1",
+          "tap": "focus",
+          "hold": "solo"
+        },
+        {
+          "pad": 2,
+          "role": "track",
+          "track": "t2",
+          "tap": "focus",
+          "hold": "solo"
+        },
+        {
+          "pad": 3,
+          "role": "track",
+          "track": "t3",
+          "tap": "focus",
+          "hold": "solo"
+        },
+        {
+          "pad": 4,
+          "role": "track",
+          "track": "t4",
+          "tap": "focus",
+          "hold": "solo"
+        },
+        {
+          "pad": 5,
+          "role": "utility",
+          "name": "Sync"
+        },
+        {
+          "pad": 6,
+          "role": "utility",
+          "name": "Retrigger"
+        },
+        {
+          "pad": 7,
+          "role": "utility",
+          "name": "Uni / bipolar"
+        },
+        {
+          "pad": 8,
+          "role": "utility",
+          "name": "Clear"
+        },
+        {
+          "pad": 9,
+          "role": "mod-shape",
+          "shape": "LFO"
+        },
+        {
+          "pad": 10,
+          "role": "mod-shape",
+          "shape": "Random"
+        },
+        {
+          "pad": 11,
+          "role": "mod-shape",
+          "shape": "Envelope"
+        },
+        {
+          "pad": 12,
+          "role": "mod-shape",
+          "shape": "Follower"
+        },
+        {
+          "pad": 13,
+          "role": "mod-slot",
+          "index": 1,
+          "tap": "select",
+          "hold": "turn any knob to assign",
+          "latch": "Shift + tap"
+        },
+        {
+          "pad": 14,
+          "role": "mod-slot",
+          "index": 2,
+          "tap": "select",
+          "hold": "turn any knob to assign",
+          "latch": "Shift + tap"
+        },
+        {
+          "pad": 15,
+          "role": "mod-slot",
+          "index": 3,
+          "tap": "select",
+          "hold": "turn any knob to assign",
+          "latch": "Shift + tap"
+        },
+        {
+          "pad": 16,
+          "role": "mod-slot",
+          "index": 4,
+          "tap": "select",
+          "hold": "turn any knob to assign",
+          "latch": "Shift + tap"
+        }
+      ]
+    },
+    {
+      "id": "mix",
+      "name": "Mix",
+      "stockButton": "Knob FX",
+      "fader": "track level",
+      "fPages": [
+        "Strip",
+        "Input",
+        "Master"
+      ],
+      "columnsAreTracks": true,
+      "pads": [
+        {
+          "pad": 1,
+          "role": "input-monitor",
+          "track": "t1"
+        },
+        {
+          "pad": 2,
+          "role": "input-monitor",
+          "track": "t2"
+        },
+        {
+          "pad": 3,
+          "role": "input-monitor",
+          "track": "t3"
+        },
+        {
+          "pad": 4,
+          "role": "input-monitor",
+          "track": "t4"
+        },
+        {
+          "pad": 5,
+          "role": "solo",
+          "track": "t1"
+        },
+        {
+          "pad": 6,
+          "role": "solo",
+          "track": "t2"
+        },
+        {
+          "pad": 7,
+          "role": "solo",
+          "track": "t3"
+        },
+        {
+          "pad": 8,
+          "role": "solo",
+          "track": "t4"
+        },
+        {
+          "pad": 9,
+          "role": "mute",
+          "track": "t1"
+        },
+        {
+          "pad": 10,
+          "role": "mute",
+          "track": "t2"
+        },
+        {
+          "pad": 11,
+          "role": "mute",
+          "track": "t3"
+        },
+        {
+          "pad": 12,
+          "role": "mute",
+          "track": "t4"
+        },
+        {
+          "pad": 13,
+          "role": "select",
+          "track": "t1"
+        },
+        {
+          "pad": 14,
+          "role": "select",
+          "track": "t2"
+        },
+        {
+          "pad": 15,
+          "role": "select",
+          "track": "t3"
+        },
+        {
+          "pad": 16,
+          "role": "select",
+          "track": "t4"
+        }
+      ]
+    },
+    {
+      "id": "keys",
+      "name": "Keys",
+      "stockButton": "16 Levels",
+      "fader": "track level",
+      "fPages": [
+        "Scale",
+        "Range",
+        "Aftertouch"
+      ],
+      "layout": {
+        "root": "pad 1",
+        "scaleLocked": true,
+        "example": "C minor",
+        "aftertouch": "per voice, default Granular pitch scatter",
+        "knobs": [
+          "Root",
+          "Scale",
+          "Octave"
+        ]
+      },
+      "pads": [
+        {
+          "pad": 1,
+          "role": "note",
+          "note": "C3"
+        },
+        {
+          "pad": 2,
+          "role": "note",
+          "note": "D3"
+        },
+        {
+          "pad": 3,
+          "role": "note",
+          "note": "D#3"
+        },
+        {
+          "pad": 4,
+          "role": "note",
+          "note": "F3"
+        },
+        {
+          "pad": 5,
+          "role": "note",
+          "note": "G3"
+        },
+        {
+          "pad": 6,
+          "role": "note",
+          "note": "G#3"
+        },
+        {
+          "pad": 7,
+          "role": "note",
+          "note": "A#3"
+        },
+        {
+          "pad": 8,
+          "role": "note",
+          "note": "C4"
+        },
+        {
+          "pad": 9,
+          "role": "note",
+          "note": "D4"
+        },
+        {
+          "pad": 10,
+          "role": "note",
+          "note": "D#4"
+        },
+        {
+          "pad": 11,
+          "role": "note",
+          "note": "F4"
+        },
+        {
+          "pad": 12,
+          "role": "note",
+          "note": "G4"
+        },
+        {
+          "pad": 13,
+          "role": "note",
+          "note": "G#4"
+        },
+        {
+          "pad": 14,
+          "role": "note",
+          "note": "A#4"
+        },
+        {
+          "pad": 15,
+          "role": "note",
+          "note": "C5"
+        },
+        {
+          "pad": 16,
+          "role": "note",
+          "note": "D5"
+        }
+      ]
+    }
+  ]
+}
