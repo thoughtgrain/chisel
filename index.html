@@ -135,12 +135,17 @@
     <div class="wrap">
       <p class="num">04</p>
       <h2 id="pads-title">What the pads do</h2>
-      <p class="intro">CHISEL takes over five stock buttons as modes. Pressing the active mode's button again always returns to Chain, so there's one way home from anywhere. Try it: pick a mode, then tap pads. In Chain, the track and device pads change what the bottom row does.</p>
+      <p class="intro">CHISEL takes over five stock buttons as modes. Pressing the active mode's button again always returns to Chain, so there's one way home from anywhere. Try it: pick a mode, then tap pads and watch the screen. In Chain, a device pad opens that device's page, tapping it again steps through its pages, and the bottom row turns into that device's actions. The F1–F3 buttons above the screen jump straight to a page.</p>
 
       <div class="explorer">
         <div class="modes" role="tablist" aria-label="Modes" id="mode-tabs"></div>
         <div class="ex-body" role="tabpanel" id="mode-panel" tabindex="-1">
           <div class="ex-grid-wrap">
+            <div class="ex-device">
+              <div class="fbtns" id="ex-fbtns" role="group" aria-label="Page buttons"></div>
+              <div class="scr-box" id="ex-screen"></div>
+              <p class="sr-only" id="ex-live" aria-live="polite"></p>
+            </div>
             <p class="ex-axis">Top row = pads 13–16 · pad 1 is bottom-left</p>
             <div class="pad-grid" id="pad-grid"></div>
           </div>
