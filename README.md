@@ -14,7 +14,7 @@ This is a design spec, not shipping software. On Oct 28, 2026 Akai announced it'
 | --- | --- |
 | [`docs/`](docs/README.md) | The design spec, one chapter per topic |
 | [`docs/data/chisel-map.json`](docs/data/chisel-map.json) | Machine-readable pad maps, devices, pages and modes, ready to build a prototype or firmware UI from |
-| `gh-pages` branch | The walkthrough site's source (static HTML, CSS and JS) |
+| [`index.html`](index.html), [`assets/`](assets/) | The walkthrough site: static HTML, CSS and JS, no build step. Also on the `gh-pages` branch. |
 
 ## The idea in four rules
 
